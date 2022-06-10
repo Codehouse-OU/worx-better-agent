@@ -1,4 +1,6 @@
 spring:
+  pid:
+    file: ./${spring.application.name}.pid
   application:
     name: worxlandroid-agent
 server:
@@ -12,7 +14,7 @@ logging:
     ee.codehouse: DEBUG
 
 application:
-  mainServerUrl: "http://192.168.1.217:8011"
+  mainServerUrl: "http://52.29.34.99:8080"
   scheduleInterval: "0 * * * * ?"
   logging:
     use-json-format: false

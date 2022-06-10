@@ -27,13 +27,16 @@ public class StatusRequestScheduler {
         queryLog.setTimestamp(dateTime);
         try {
             mowerApiClient.getCurrentStatus().ifPresent(currentStatus -> {
+                log.debug("Got new status, sending to backend");
                 var serverCurrentStatus = currentStatusMapper.toEntity(currentStatus);
                 var status = serverApiClient.addStatus(serverCurrentStatus);
                 queryLog.setSuccessful(status);
             });
+            log.debug("Sending querylog entry");
             serverApiClient.addQueryLog(queryLog);
         } catch (Exception e) {
             log.error("Unable to send data. Reason: {}", e.getMessage());
+            log.debug(e.getCause().getMessage());
         }
 
     }

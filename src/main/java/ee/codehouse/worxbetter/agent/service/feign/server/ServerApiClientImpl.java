@@ -15,6 +15,7 @@ public class ServerApiClientImpl implements ServerApiClient {
 
     @Override
     public boolean addStatus(CurrentStatus currentStatus) {
+        log.debug("Adding status");
         var result = false;
         var response = worxApiClient.addLatestStatus(currentStatus);
         result = HttpStatus.CREATED.equals(response.getStatusCode());
@@ -23,6 +24,7 @@ public class ServerApiClientImpl implements ServerApiClient {
 
     @Override
     public boolean addQueryLog(QueryLog queryLog) {
+        log.debug("Adding query log");
         var result = false;
         var response = worxApiClient.addQueryLog(queryLog);
         result = HttpStatus.CREATED.equals(response.getStatusCode());
