@@ -5,5 +5,5 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.WARN)
-public interface CurrentStatusMapper extends EntityMapper<CurrentStatus, ee.codehouse.worxbetter.server.model.CurrentStatus> {
+public interface MowerStatusMapper extends EntityMapper<CurrentStatus, ee.codehouse.worxbetter.server.model.MowerStatus> {
 }

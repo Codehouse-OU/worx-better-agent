@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
+    private String appId;
     private String scheduleInterval = "0 * * * * ?";
     private String mainServerUrl;
     private final Logging logging = new Logging();
@@ -121,5 +122,13 @@ public class ApplicationProperties {
 
     public void setMainServerUrl(String mainServerUrl) {
         this.mainServerUrl = mainServerUrl;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 }
