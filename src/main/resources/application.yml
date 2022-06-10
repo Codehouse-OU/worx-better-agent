@@ -1,4 +1,6 @@
 spring:
+  pid:
+    file: ./${spring.application.name}.pid
   application:
     name: worxlandroid-agent
 server:
@@ -12,8 +14,13 @@ logging:
     ee.codehouse: DEBUG
 
 application:
-  mainServerUrl: "http://192.168.1.217:8011"
+  appId: "123e4567-e89b-12d3-a456-426655440000"
+  mainServerUrl: "http://52.29.34.99:8080"
   scheduleInterval: "0 * * * * ?"
+  landroid:
+    url: "http://192.168.1.171"
+    username: "admin"
+    pin: "4444"
   logging:
     use-json-format: false
     logstash:
@@ -21,7 +28,3 @@ application:
       host: logstash
       port: 5044
       queue-size: 512
-  landroid:
-    url: "http://192.168.1.171"
-    username: "admin"
-    pin: "4444"

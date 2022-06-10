@@ -1,0 +1,8 @@
+application:
+  appId: 123abc
+  mainServerUrl: "http://localhost:8080"
+  scheduleInterval: "0 * * * * ?"
+  landroid:
+    url: "http://192.168.1.171"
+    username: "admin"
+    pin: "4444"

@@ -1,14 +1,17 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Worx Landroid BE
+  title: Worx Better BE
 tags:
-  - name: worx
+  - name: app
+    description: Endpoints for works-better mobile app
+  - name: agent
+    description: Endpoints for works-better agent
 paths:
   "/status/latest":
     get:
       tags:
-        - worx
+        - app
       summary: Get the latest status from the Worx mower
       operationId: getLatestStatus
       responses:
@@ -17,19 +20,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Status"
+                $ref: "#/components/schemas/StatusResponse"
         "404":
           description: Status not found
     post:
       tags:
-        - worx
+        - agent
       summary: Add latest status
       operationId: addLatestStatus
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CurrentStatus"
+              $ref: "#/components/schemas/MowerStatus"
         required: true
       responses:
         "201":
@@ -39,7 +42,7 @@ paths:
   "/status/distinct":
     get:
       tags:
-        - worx
+        - app
       summary: Get the last 10 distinct statuses from the Worx mower
       operationId: getLastDistinctStatuses
       responses:
@@ -50,20 +53,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Status"
-  "/status/request":
-    post:
-      tags:
-        - worx
-      summary: Update status from the mower
-      operationId: updateStatus
-      responses:
-        "204":
-          description: Requested
+                  $ref: "#/components/schemas/StatusResponse"
   "/query-log":
     get:
       tags:
-        - worx
+        - app
       summary: Get the query history
       operationId: getQueryLog
       responses:
@@ -74,19 +68,19 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/QueryLog"
+                  $ref: "#/components/schemas/QueryLogDto"
         "404":
           description: QueryLogs not found
     post:
       tags:
-        - worx
+        - agent
       summary: Add latest query log
       operationId: addQueryLog
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/QueryLog"
+              $ref: "#/components/schemas/QueryLogDto"
         required: true
       responses:
         "201":
@@ -94,10 +88,15 @@ paths:
         "400":
           description: Bad request
 servers:
-  - url: https://localhost:8011/
+  - url: http://52.29.34.99:8080/
 components:
+  securitySchemes:
+    appId:
+      type: apiKey
+      in: header
+      name: X-APP-ID
   schemas:
-    Status:
+    StatusResponse:
       type: object
       properties:
         id:
@@ -121,7 +120,7 @@ components:
         timestamp:
           type: string
           format: 'date-time'
-    QueryLog:
+    QueryLogDto:
       type: object
       properties:
         id:
@@ -132,7 +131,7 @@ components:
         timestamp:
           type: string
           format: 'date-time'
-    CurrentStatus:
+    MowerStatus:
       type: object
       properties:
         perc_batt:
@@ -148,3 +147,5 @@ components:
         distance:
           type: integer
           format: int64
+security:
+  - appId: []

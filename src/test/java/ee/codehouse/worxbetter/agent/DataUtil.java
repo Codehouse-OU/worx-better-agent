@@ -1,9 +1,5 @@
 package ee.codehouse.worxbetter.agent;
 
-import ee.codehouse.worxbetter.server.model.CurrentStatus;
-
-import java.time.OffsetDateTime;
-
 public class DataUtil {
     public static int BATTERY = 22;
     public static long DISTANCE = 1000000;

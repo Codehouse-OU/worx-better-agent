@@ -11,6 +11,7 @@ buildscript {
 dependencies {
     implementation "io.swagger.core.v3:swagger-annotations:${swaggerAnnotationsVersion}"
     implementation "org.openapitools:jackson-databind-nullable:${jacksonDatabindVersion}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDatatypeVersion}"
 }
 task generateServerClient(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
     generatorName = "spring"
