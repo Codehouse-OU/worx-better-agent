@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: worxlandroid-agent
+server:
+  port: 8010
+info:
+  app:
+    name: ${spring.application.name}
+    version: 1.0.0
+logging:
+  level:
+    ee.codehouse: DEBUG
+
+application:
+  mainServerUrl: "http://192.168.1.217:8011"
+  scheduleInterval: "0 * * * * ?"
+  logging:
+    use-json-format: false
+    logstash:
+      enabled: false
+      host: logstash
+      port: 5044
+      queue-size: 512
+  landroid:
+    url: "http://192.168.1.171"
+    username: "admin"
+    pin: "4444"

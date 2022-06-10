@@ -1,0 +1,47 @@
+buildscript {
+    apply from: 'dependencies.gradle'
+
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id 'java'
+    id "jacoco"
+    id 'org.springframework.boot' version "2.7.0"
+    id 'io.spring.dependency-management' version "1.0.11.RELEASE"
+    id "org.openapi.generator" version "6.0.0"
+    id 'com.google.cloud.tools.jib' version "3.2.1"
+}
+
+apply from: "gradle/api.gradle"
+apply from: "gradle/mapstruct.gradle"
+apply from: "gradle/docker.gradle"
+apply from: "gradle/testing.gradle"
+
+group = 'ee.codehouse'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //logging
+    implementation "net.logstash.logback:logstash-logback-encoder:${logbackEncoder}"
+    implementation "com.fasterxml.jackson.module:jackson-module-jaxb-annotations"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+
+    //application
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${openfeignVersion}"
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}
+
+wrapper {
+    gradleVersion = "7.4"
+}

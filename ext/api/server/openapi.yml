@@ -1,0 +1,150 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Worx Landroid BE
+tags:
+  - name: worx
+paths:
+  "/status/latest":
+    get:
+      tags:
+        - worx
+      summary: Get the latest status from the Worx mower
+      operationId: getLatestStatus
+      responses:
+        "200":
+          description: Status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+        "404":
+          description: Status not found
+    post:
+      tags:
+        - worx
+      summary: Add latest status
+      operationId: addLatestStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CurrentStatus"
+        required: true
+      responses:
+        "201":
+          description: New status entry created
+        "400":
+          description: Bad request
+  "/status/distinct":
+    get:
+      tags:
+        - worx
+      summary: Get the last 10 distinct statuses from the Worx mower
+      operationId: getLastDistinctStatuses
+      responses:
+        "200":
+          description: Statuses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Status"
+  "/status/request":
+    post:
+      tags:
+        - worx
+      summary: Update status from the mower
+      operationId: updateStatus
+      responses:
+        "204":
+          description: Requested
+  "/query-log":
+    get:
+      tags:
+        - worx
+      summary: Get the query history
+      operationId: getQueryLog
+      responses:
+        "200":
+          description: QueryLog
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QueryLog"
+        "404":
+          description: QueryLogs not found
+    post:
+      tags:
+        - worx
+      summary: Add latest query log
+      operationId: addQueryLog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryLog"
+        required: true
+      responses:
+        "201":
+          description: New query log entry created
+        "400":
+          description: Bad request
+servers:
+  - url: https://localhost:8011/
+components:
+  schemas:
+    Status:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        battery:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+        state:
+          type: string
+        workReq:
+          type: string
+        batteryChargerState:
+          type: string
+          description: "Possible states: idle, charging"
+        distance:
+          type: integer
+          format: int64
+        timestamp:
+          type: string
+          format: 'date-time'
+    QueryLog:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        successful:
+          type: boolean
+        timestamp:
+          type: string
+          format: 'date-time'
+    CurrentStatus:
+      type: object
+      properties:
+        perc_batt:
+          type: string
+        state:
+          type: string
+        workReq:
+          type: string
+        message:
+          type: string
+        batteryChargerState:
+          type: string
+        distance:
+          type: integer
+          format: int64

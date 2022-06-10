@@ -1,0 +1,8 @@
+{
+  "dateLibrary": "java8",
+  "hideGenerationTimestamp": true,
+  "apiPackage": "ee.codehouse.worxbetter.server.api",
+  "modelPackage": "ee.codehouse.worxbetter.server.model",
+  "interfaceOnly": true,
+  "serializableModel": "true"
+}

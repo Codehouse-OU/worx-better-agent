@@ -1,0 +1,8 @@
+{
+  "dateLibrary": "java8",
+  "hideGenerationTimestamp": true,
+  "apiPackage": "ee.codehouse.worxbetter.landroid.client.api",
+  "modelPackage": "ee.codehouse.worxbetter.landroid.client.model",
+  "interfaceOnly": true,
+  "serializableModel": "true"
+}

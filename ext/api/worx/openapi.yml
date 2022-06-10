@@ -1,0 +1,50 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Worx Landroid API
+tags:
+  - name: worx
+paths:
+  "/jsondata.cgi":
+    get:
+      tags:
+        - landroid
+      summary: Get current Landroid status
+      operationId: getCurrentStatus
+      responses:
+        "200":
+          description: Current Status
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/CurrentStatus"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Status not found - Mower dead or out of wifi coverage area
+servers:
+  - url: http://192.168.1.171/
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    CurrentStatus:
+      type: object
+      properties:
+        perc_batt:
+          type: string
+        state:
+          type: string
+        workReq:
+          type: string
+        message:
+          type: string
+        batteryChargerState:
+          type: string
+        distance:
+          type: integer
+          format: int64
+security:
+  - basicAuth: []
