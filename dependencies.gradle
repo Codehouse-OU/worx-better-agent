@@ -8,4 +8,5 @@ ext {
     jacksonDatabindVersion = "0.2.2"
     validationApiVersion = "2.0.1.Final"
     jacksonDatatypeVersion = "2.13.2"
+    loadbalancerVersion = "3.1.3"
 }

@@ -36,7 +36,9 @@ dependencies {
 
     //application
     implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.retry:spring-retry"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${openfeignVersion}"
+    implementation "org.springframework.cloud:spring-cloud-starter-loadbalancer:${loadbalancerVersion}"
     implementation "javax.validation:validation-api:${validationApiVersion}"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"

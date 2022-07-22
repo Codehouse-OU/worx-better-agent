@@ -51,6 +51,6 @@ application:
       port: 5044
       queue-size: 512
   landroid:
-    url: "http://localhost/"
+    url: "localhost"
     username: "admin"
     pin: "1223"

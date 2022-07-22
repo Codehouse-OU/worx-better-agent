@@ -3,6 +3,10 @@ spring:
     file: ./${spring.application.name}.pid
   application:
     name: worxlandroid-agent
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 server:
   port: 8010
 info:
