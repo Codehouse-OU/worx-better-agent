@@ -24,6 +24,11 @@ pipeline {
             }
         }
         stage('Create tag') {
+            agent {
+                docker {
+                    image 'jhipster/jhipster:v6.10.4'
+                }
+            }
             when {
                 branch 'master'
             }
