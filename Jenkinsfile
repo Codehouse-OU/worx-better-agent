@@ -23,6 +23,21 @@ pipeline {
                 junit 'build/test-results/**/*.xml'
             }
         }
+        stage('Create tag') {
+            when {
+                branch 'master'
+            }
+            environment {
+                GITHUB_CREDS = credentials('github')
+            }
+            steps {
+                sh "chmod +x ./ext/semver.sh"
+                sh "git config --global user.email \"markuskarileet@hotmail.com\""
+                sh "git config --global credential.helper store"
+                sh 'echo "https://$GITHUB_CREDS@github.com" > ~/.git-credentials'
+                sh "./ext/semver.sh"
+            }
+        }
         stage('Package') {
             when {
                 anyOf {

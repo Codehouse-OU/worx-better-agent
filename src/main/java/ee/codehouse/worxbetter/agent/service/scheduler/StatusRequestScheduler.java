@@ -36,7 +36,6 @@ public class StatusRequestScheduler {
             serverApiClient.addQueryLog(queryLog);
         } catch (Exception e) {
             log.error("Unable to send data. Reason: {}", e.getMessage());
-            log.debug(e.getCause().getMessage());
         }
 
     }
