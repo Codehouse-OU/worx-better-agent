@@ -1,23 +1,36 @@
 pipeline {
-    agent {
-        docker {
-            image 'gradle:7.4-jdk17-alpine'
-            args '-u root -e GRADLE_USER_HOME=/tmp/.gradle -v /tmp/.gradle:/tmp/.gradle'
-        }
-    }
+    agent none
     stages {
         stage('Check') {
+            agent {
+                docker {
+                    image 'gradle:7.4-jdk17-alpine'
+                    args '-u root -e GRADLE_USER_HOME=/tmp/.gradle -v /tmp/.gradle:/tmp/.gradle'
+                }
+            }
             steps {
                 sh "java -version"
             }
         }
         stage('Clean') {
+            agent {
+                docker {
+                    image 'gradle:7.4-jdk17-alpine'
+                    args '-u root -e GRADLE_USER_HOME=/tmp/.gradle -v /tmp/.gradle:/tmp/.gradle'
+                }
+            }
             steps {
                 sh "chmod +x gradlew"
                 sh "./gradlew clean --no-daemon"
             }
         }
         stage('Test') {
+            agent {
+                docker {
+                    image 'gradle:7.4-jdk17-alpine'
+                    args '-u root -e GRADLE_USER_HOME=/tmp/.gradle -v /tmp/.gradle:/tmp/.gradle'
+                }
+            }
             steps {
                 sh "./gradlew test integrationTest --no-daemon"
                 junit 'build/test-results/**/*.xml'
@@ -44,6 +57,12 @@ pipeline {
             }
         }
         stage('Package') {
+            agent {
+                docker {
+                    image 'gradle:7.4-jdk17-alpine'
+                    args '-u root -e GRADLE_USER_HOME=/tmp/.gradle -v /tmp/.gradle:/tmp/.gradle'
+                }
+            }
             when {
                 anyOf {
                     branch 'master'
