@@ -1,47 +1,47 @@
 pipeline {
-    agent none
+    agent {
+        docker {
+            image 'markuskarileet/gradle-ci:jdk-17'
+            args '-u root -e GRADLE_USER_HOME=/tmp/.gradle -v /tmp/.gradle:/tmp/.gradle'
+        }
+    }
     stages {
         stage('Check') {
-            agent {
-                docker {
-                    image 'gradle:7.4-jdk17-alpine'
-                    args '-u root -e GRADLE_USER_HOME=/tmp/.gradle -v /tmp/.gradle:/tmp/.gradle'
-                }
-            }
             steps {
                 sh "java -version"
             }
         }
         stage('Clean') {
-            agent {
-                docker {
-                    image 'gradle:7.4-jdk17-alpine'
-                    args '-u root -e GRADLE_USER_HOME=/tmp/.gradle -v /tmp/.gradle:/tmp/.gradle'
-                }
-            }
             steps {
                 sh "chmod +x gradlew"
                 sh "./gradlew clean --no-daemon"
             }
         }
-        stage('Test') {
-            agent {
-                docker {
-                    image 'gradle:7.4-jdk17-alpine'
-                    args '-u root -e GRADLE_USER_HOME=/tmp/.gradle -v /tmp/.gradle:/tmp/.gradle'
-                }
-            }
+        stage('Unit Test') {
             steps {
-                sh "./gradlew test integrationTest --no-daemon"
+                sh "./gradlew test --no-daemon"
                 junit 'build/test-results/**/*.xml'
             }
         }
-        stage('Create tag') {
-            agent {
-                docker {
-                    image 'jhipster/jhipster:v6.10.4'
+        stage('Integration Test') {
+            steps {
+                sh "./gradlew integrationTest --no-daemon"
+                junit 'build/test-results/**/*.xml'
+            }
+        }
+        stage('Sonarqube') {
+            steps {
+                withSonarQubeEnv('Sonar') {
+                    sh "./gradlew jacocoTestReport sonarqube --no-daemon"
                 }
             }
+        }
+        stage('Quality gate') {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+        stage('Create tag') {
             when {
                 branch 'master'
             }
@@ -57,12 +57,6 @@ pipeline {
             }
         }
         stage('Package') {
-            agent {
-                docker {
-                    image 'gradle:7.4-jdk17-alpine'
-                    args '-u root -e GRADLE_USER_HOME=/tmp/.gradle -v /tmp/.gradle:/tmp/.gradle'
-                }
-            }
             when {
                 anyOf {
                     branch 'master'

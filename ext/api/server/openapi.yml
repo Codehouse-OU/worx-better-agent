@@ -134,18 +134,185 @@ components:
     MowerStatus:
       type: object
       properties:
+        versione_fw:
+          type: number
+          description: Firmware version
+          example: 2.66
+        lingua:
+          type: integer
+          format: int64
+          description: Language in use
+          example: 14
+        ore_funz:
+          type: array
+          description: Decides for how long the mower will work each day, probably expressed as 0,1 h
+          items:
+            type: integer
+            format: int64
+          example: [70,70,70,70,70,70,70]
+        ora_on:
+          type: array
+          description: Hour of day that the Landroid should mowing, per weekday
+          items:
+            type: integer
+            format: int64
+          example: [ 0,0,0,0,0,0,0 ]
+        min_on:
+          type: array
+          description: Minutes on the hour (above) that the Landroid should start mowing, per weekday
+          items:
+            type: integer
+            format: int64
+          example: [ 0,0,0,0,0,0,0 ]
+        allarmi:
+          type: array
+          description: |
+            Alarms - flags set to 1 when alarm is active
+            [0] Blade blocked
+            [1] Repositioning error
+            [2] Outside wire ("Outside working area")
+            [3] Blade blocked
+            [4] Outside wire ("Outside working area")
+            [5] Mower lifted ("Lifted up")
+            [6] error
+            [7] error (Set when "Lifted up" - "Upside down"?)
+            [8] error
+            [9] Collision sensor blocked
+            [10] Mower tilted
+            [11] Charge error (Set when "Lifted up"?
+            [12] Battery error
+          items:
+            type: integer
+            format: int64
+          example: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        settaggi:
+          type: array
+          description: |
+            Settings / state
+               [5] in base ("charging" or "charging completed", see [13])
+               [11] start
+               [12] stop
+               [13] charging completed
+               [14] manual stop
+               [15] going home
+          items:
+            type: integer
+            format: int64
+          example: [0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        mac:
+          type: array
+          description: The MAC address of the Landroid WiFi
+          items:
+            type: integer
+            format: int64
+          example: [0,35,167,80,111,112]
+        time_format:
+          type: integer
+          format: int64
+          description: Time format
+          example: 1
+        date_format:
+          type: integer
+          format: int64
+          description: Date format
+          example: 1
+        rit_pioggia:
+          type: integer
+          format: int64
+          description: Time to wait after rain, in minutes
+          example: 1
+        area:
+          type: integer
+          format: int64
+          example: 1
+        enab_bordo:
+          type: integer
+          format: int64
+          description: Enable edge cutting
+          example: 1
+        percent_programmatore:
+          type: integer
+          format: int64
+          description: Working time percent
+          example: 100
+        indice_area:
+          type: integer
+          format: int64
+          description: Garden size, assumed to be in 100 m^2
+          example: 9
+        tempo_frenatura:
+          type: integer
+          format: int64
+          example: 20
+        perc_rallenta_max:
+          type: integer
+          format: int64
+          example: 70
+        canale:
+          type: integer
+          format: int64
+          example: 0
+        num_ricariche_batt:
+          type: integer
+          format: int64
+          description: Number of battery recharges
+          example: 49218
+        num_aree_lavoro:
+          type: integer
+          format: int64
+          description: Number of zones in use
+          example: 4
+        dist_area:
+          type: array
+          description: Distance in meters to the zone starts
+          items:
+            type: integer
+            format: int64
+          example: [110,77,60,5]
+        perc_per_area:
+          type: array
+          description: Percentage per zone, expressed in 10% increments (i.e. 3 = 30%)
+          items:
+            type: integer
+            format: int64
+          example: [4,2,2,2]
+        area_in_lavoro:
+          type: integer
+          format: int64
+          example: 5
+        email:
+          type: string
+          description: Account email
+          example: john.doe@gmail.com
         perc_batt:
           type: string
+          description: Charge level of the battery
+          example: 100
+        ver_proto:
+          type: integer
+          format: int64
+          description: Protocol version?
+          example: 1
         state:
           type: string
+          description: Current mower state
+          example: grass cutting
         workReq:
           type: string
+          description: Current work mode
+          example: scheduler req grass cut
         message:
           type: string
+          description: Additional message from the mower. Usually 'none'
+          example: raining
         batteryChargerState:
           type: string
+          description: Current charger state
+          example: idle
         distance:
           type: integer
           format: int64
+          description: Distance mower has travelled. Probably number of wheel rotations
+          example: 395823
 security:
   - appId: []

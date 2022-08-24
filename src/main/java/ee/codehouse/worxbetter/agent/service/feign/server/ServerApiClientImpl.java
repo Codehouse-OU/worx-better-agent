@@ -17,8 +17,12 @@ public class ServerApiClientImpl implements ServerApiClient {
     public boolean addStatus(MowerStatus currentStatus) {
         log.debug("Adding status");
         var result = false;
-        var response = agentApiClient.addLatestStatus(currentStatus);
-        result = HttpStatus.CREATED.equals(response.getStatusCode());
+        try {
+            var response = agentApiClient.addLatestStatus(currentStatus);
+            result = HttpStatus.CREATED.equals(response.getStatusCode());
+        } catch (Exception e) {
+            log.error("Unable to query server. Reason: {}", e.getMessage());
+        }
         return result;
     }
 
@@ -26,8 +30,12 @@ public class ServerApiClientImpl implements ServerApiClient {
     public boolean addQueryLog(QueryLogDto queryLog) {
         log.debug("Adding query log");
         var result = false;
-        var response = agentApiClient.addQueryLog(queryLog);
-        result = HttpStatus.CREATED.equals(response.getStatusCode());
+        try {
+            var response = agentApiClient.addQueryLog(queryLog);
+            result = HttpStatus.CREATED.equals(response.getStatusCode());
+        } catch (Exception e) {
+            log.error("Unable to query server. Reason: {}", e.getMessage());
+        }
         return result;
     }
 }
