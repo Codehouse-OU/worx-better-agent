@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
@@ -61,5 +62,28 @@ class MowerApiClientTest {
         var actual = mowerApiClient.getCurrentStatus();
 
         assertThat(actual).isEmpty();
+    }
+
+    @Test
+    void changeConfiguration_feignException() {
+        doThrow(FeignException.class).when(landroidApiClient).postPayload(any());
+
+        var actual = mowerApiClient.changeConfiguration(ConfigurationElement.MOW_AFTER_RAIN, 1);
+
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
+    void changeConfiguration() {
+        var currentStatus = new CurrentStatus();
+        var mowAfterRain = "10";
+        currentStatus.setRitPioggia(Long.getLong(mowAfterRain));
+        var response = ResponseEntity.ok(currentStatus);
+        when(landroidApiClient.postPayload("data=[[\"rit_pioggia\",0," + mowAfterRain + "]]")).thenReturn(response);
+
+        var actual = mowerApiClient.changeConfiguration(ConfigurationElement.MOW_AFTER_RAIN, Integer.parseInt(mowAfterRain));
+
+        assertThat(actual).isPresent();
+        assertThat(actual.get().getRitPioggia()).isEqualTo(Long.getLong(mowAfterRain));
     }
 }

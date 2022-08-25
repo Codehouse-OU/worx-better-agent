@@ -42,6 +42,7 @@ logging:
     ee.codehouse.worxbetter: trace
 
 application:
+  appId: "unit test"
   scheduleInterval: "0 * * * * ?"
   logging:
     use-json-format: false
@@ -51,6 +52,11 @@ application:
       port: 5044
       queue-size: 512
   landroid:
-    url: "localhost"
+    url: ""
     username: "admin"
-    pin: "1223"
+    pin: ""
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full

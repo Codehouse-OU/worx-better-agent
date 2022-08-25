@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface MowerApiClient {
     Optional<CurrentStatus> getCurrentStatus();
+    Optional<CurrentStatus> changeConfiguration(ConfigurationElement element, int value);
+    Optional<CurrentStatus> startAction(ConfigurationElement element);
 }

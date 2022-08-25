@@ -6,3 +6,11 @@ application:
     url: ""
     username: "admin"
     pin: ""
+logging:
+  level:
+    ee.codehouse.worxbetter: debug
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full

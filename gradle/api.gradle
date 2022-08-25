@@ -25,7 +25,14 @@ task generateClient(type: org.openapitools.generator.gradle.plugin.tasks.Generat
     library = "spring-cloud"
     inputSpec = file("$projectDir/ext/api/worx/openapi.yml").absolutePath
     outputDir = "$buildDir/generated".toString()
-    configFile = file("$projectDir/ext/api/worx/openapi-conf.json").absolutePath
+    configOptions = [
+        "dateLibrary": "java8",
+        "hideGenerationTimestamp": "true",
+        "apiPackage": "ee.codehouse.worxbetter.landroid.client.api",
+        "modelPackage": "ee.codehouse.worxbetter.landroid.client.model",
+        "interfaceOnly": "true",
+        "serializableModel": "true"
+    ]
 }
 compileJava.dependsOn generateServerClient, generateClient
 
