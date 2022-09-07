@@ -1,7 +1,7 @@
 ext {
     lombokVersion = "1.18.24"
     logbackEncoder = "7.2"
-    openfeignVersion = "3.1.3"
+    openfeignVersion = "3.1.4"
     mapstructVersion = "1.5.0.Final"
     openapiGeneratorVersion = "5.4.0"
     swaggerAnnotationsVersion = "2.2.0"
