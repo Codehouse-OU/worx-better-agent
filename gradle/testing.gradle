@@ -6,7 +6,6 @@ test {
     testLogging {
         events 'FAILED', 'SKIPPED'
     }
-    reports.html.enabled = false
 }
 task integrationTest(type: Test) {
     useJUnitPlatform()
@@ -17,7 +16,6 @@ task integrationTest(type: Test) {
     testLogging {
         events 'FAILED', 'SKIPPED'
     }
-    reports.html.enabled = false
 }
 check.dependsOn integrationTest
 task testReport(type: TestReport) {
